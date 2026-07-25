@@ -1,0 +1,131 @@
+.topNav {
+  width: 100%;
+  height: var(--topnav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  flex-shrink: 0;
+  animation: fadeIn 0.5s ease-out 0.15s both;
+}
+
+.topNavLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobileMenuBtn {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-new-chat);
+  border: 1px solid var(--border-glow);
+  color: var(--text-accent);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  max-width: 200px;
+}
+
+.mobileMenuText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.versionBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--bg-btn);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.versionBadge:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+.topNavRight {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navLink {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+}
+
+.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--bg-accent);
+  border-radius: 1px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--border-glow);
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast);
+}
+
+.avatar:hover {
+  box-shadow: 0 0 16px rgba(0, 198, 251, 0.25);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 600px) {
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  .versionBadge {
+    display: none;
+  }
+
+  .topNavRight {
+    gap: 10px;
+  }
+
+  .navLink {
+    display: none;
+  }
+}

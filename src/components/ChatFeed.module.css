@@ -1,0 +1,329 @@
+.container {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 16px;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.35s ease-out;
+}
+
+/* Messages List */
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.messageRow {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.userRow {
+  justify-content: flex-end;
+}
+
+.avatarWrapper {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.aiOrb {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6fb, #005bea);
+  box-shadow: 0 0 12px rgba(0, 198, 251, 0.3);
+}
+
+.pulseOrb {
+  animation: orbPulse 2s ease-in-out infinite;
+}
+
+.messageBody {
+  display: flex;
+  flex-direction: column;
+  max-width: 88%;
+  flex: 1;
+}
+
+.userRow .messageBody {
+  align-items: flex-end;
+}
+
+.senderMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.76rem;
+}
+
+.senderName {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.time {
+  color: var(--text-muted);
+}
+
+/* Content Wrapper (ChatGPT / Claude Open Flow) */
+.contentWrapper {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* User Bubble: Sleek compact pill */
+.userContent {
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-card);
+  padding: 10px 16px;
+  border-radius: var(--radius-xl);
+  border-top-right-radius: 4px;
+  box-shadow: var(--shadow-card);
+}
+
+/* AI Content: Clean open text, NO modal card background! */
+.aiContent {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.textParagraph {
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+}
+
+/* Media Output */
+.mediaContainer {
+  margin-top: 14px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-card);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mediaHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg-accent);
+  color: #fff;
+}
+
+.mediaPreview {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Code Block (Clean Dark Terminal style) */
+.codeBlock {
+  margin-top: 12px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-card);
+  background: #090d16;
+}
+
+.codeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.codeLang {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.codeCopyBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.codeCopyBtn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+.codeBlock pre {
+  padding: 14px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: #00c6fb;
+}
+
+/* Checklist Grid */
+.checklistGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.checkCard {
+  background: var(--bg-btn);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+
+.checkCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.checkTitle {
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.statusBadge {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.doneBadge {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+}
+
+.recBadge {
+  background: rgba(0, 198, 251, 0.2);
+  color: var(--text-accent);
+}
+
+.checkDesc {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+/* Suggestion Pills */
+.suggestionPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.sugPill {
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-btn);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-accent);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.sugPill:hover {
+  background: var(--bg-btn-hover);
+  border-color: var(--border-glow);
+  transform: translateY(-1px);
+}
+
+/* ── Bottom Action Bar (Icons at the bottom of AI response) ── */
+.bottomActionBar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 4px;
+}
+
+.iconActionBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.iconActionBtn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+/* Thinking State */
+.thinkingContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.typingDots {
+  display: flex;
+  gap: 4px;
+}
+
+.typingDots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-accent);
+  animation: dotBounce 1.4s infinite ease-in-out both;
+}
+
+.typingDots span:nth-child(1) { animation-delay: -0.32s; }
+.typingDots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+.thinkingText {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 600px) {
+  .checklistGrid {
+    grid-template-columns: 1fr;
+  }
+}

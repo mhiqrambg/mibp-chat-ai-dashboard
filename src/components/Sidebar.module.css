@@ -1,0 +1,269 @@
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-subtle);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 16px 12px 12px;
+  overflow-y: auto;
+  z-index: 10;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.sidebarTop {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Logo */
+.logoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoOrb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6fb, #005bea, #00c6fb);
+  background-size: 200% 200%;
+  animation: orbPulse 4s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(0, 198, 251, 0.35);
+}
+
+.logoText {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.iconBtn {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.iconBtn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+/* New Chat Button */
+.newChatBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-new-chat);
+  border: 1px solid var(--border-glow);
+  color: var(--text-accent);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.newChatBtn:hover {
+  background: linear-gradient(135deg, rgba(0, 198, 251, 0.22), rgba(0, 91, 234, 0.16));
+  box-shadow: 0 0 20px rgba(0, 198, 251, 0.12);
+}
+
+/* Section */
+.section {
+  margin-bottom: 0;
+}
+
+.sectionLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 14px 8px 6px;
+  text-transform: uppercase;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  list-style: none;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.navItem:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+.navItem.active {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+.chatItem {
+  font-size: 0.82rem;
+  padding-left: 12px;
+}
+
+/* Upgrade Card */
+.upgradeCard {
+  padding-top: 8px;
+}
+
+.upgradeCardInner {
+  background: var(--bg-upgrade);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-lg);
+  padding: 16px 14px 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.upgradeCardInner::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(0, 198, 251, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.upgradeIcon {
+  margin-bottom: 10px;
+}
+
+.upgradeOrb {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6fb, #005bea);
+  box-shadow: 0 0 16px rgba(0, 198, 251, 0.3);
+  animation: orbPulse 4s ease-in-out infinite;
+}
+
+.upgradeInfo h5 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.upgradeInfo p {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.upgradePrice {
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.upgradeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 9px 0;
+  border-radius: var(--radius-sm);
+  background: var(--bg-accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 12px rgba(0, 198, 251, 0.25);
+  border: none;
+  cursor: pointer;
+}
+
+.upgradeBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 198, 251, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 60px;
+    min-width: 60px;
+    padding: 12px 6px;
+  }
+
+  .logoText,
+  .navItem span,
+  .sectionLabel,
+  .chatItem,
+  .upgradeInfo,
+  .upgradeBtn,
+  .newChatBtn span,
+  .iconBtn {
+    display: none;
+  }
+
+  .newChatBtn {
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .navItem {
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .upgradeCardInner {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+}

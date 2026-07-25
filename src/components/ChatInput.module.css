@@ -1,0 +1,135 @@
+.wrapper {
+  width: 100%;
+  max-width: 680px;
+  margin: 8px auto 20px;
+  flex-shrink: 0;
+  animation: fadeInUp 0.7s ease-out 0.1s both;
+}
+
+.box {
+  background: var(--bg-input);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-xl);
+  padding: 14px 18px 10px;
+  backdrop-filter: blur(16px);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.box:focus-within {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow);
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sparkle {
+  font-size: 1.1rem;
+  color: var(--text-accent);
+  animation: sparklePulse 2s ease-in-out infinite;
+}
+
+.input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actionsLeft,
+.actionsRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pillBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-btn);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.pillBtn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+.activePill {
+  background: var(--bg-new-chat);
+  border-color: var(--border-glow);
+  color: var(--text-accent);
+}
+
+.circleBtn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg-btn);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.circleBtn:hover {
+  background: var(--bg-btn-hover);
+  color: var(--text-primary);
+}
+
+.voiceBtn {
+  background: var(--bg-btn);
+}
+
+.sendBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg-accent);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 12px rgba(0, 198, 251, 0.25);
+  border: none;
+  cursor: pointer;
+}
+
+.sendBtn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 20px rgba(0, 198, 251, 0.35);
+}
+
+@media (max-width: 600px) {
+  .pillBtn span {
+    display: none;
+  }
+}
