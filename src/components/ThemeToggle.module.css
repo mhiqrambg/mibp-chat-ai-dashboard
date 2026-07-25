@@ -3,55 +3,60 @@
   display: inline-block;
 }
 
+/* Glassmorphism Theme Toggle Capsule */
 .toggleBtn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  background: var(--bg-btn);
-  border: 1px solid var(--border-subtle);
+  padding: 7px 14px;
+  border-radius: 9999px;
+  background: var(--glass-bg);
+  border: var(--glass-border);
   color: var(--text-secondary);
   font-size: 0.82rem;
   font-weight: 500;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--glass-shadow);
   transition: all var(--transition-fast);
   cursor: pointer;
-  backdrop-filter: blur(8px);
 }
 
 .toggleBtn:hover {
-  background: var(--bg-btn-hover);
+  background: var(--glass-bg-hover);
   color: var(--text-primary);
-  border-color: var(--border-input);
+  border-color: var(--border-glow);
+  box-shadow: var(--glass-glow);
 }
 
 .btnLabel {
   text-transform: capitalize;
 }
 
+/* Glassmorphism Dropdown Panel */
 .dropdown {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 8px);
   right: 0;
-  width: 130px;
-  background: var(--bg-sidebar);
-  border: 1px solid var(--border-card);
+  width: 140px;
+  background: var(--glass-bg);
+  border: var(--glass-border);
   border-radius: var(--radius-md);
-  padding: 4px;
-  backdrop-filter: blur(20px);
-  box-shadow: var(--shadow-card);
+  padding: 5px;
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  box-shadow: var(--glass-shadow);
   z-index: 50;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  animation: fadeIn 0.15s ease-out;
 }
 
 .optionBtn {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 10px;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
   font-size: 0.82rem;

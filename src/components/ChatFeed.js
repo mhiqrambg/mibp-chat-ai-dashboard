@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useChatStore } from "@/store/useChatStore";
+import { Copy, Check, RotateCcw, ThumbsUp, ThumbsDown, Sparkles } from "lucide-react";
+import { motion } from "motion/react";
 import styles from "./ChatFeed.module.css";
 
-export default function ChatFeed({ chat, isThinking, onSendMessage, onRegenerate }) {
+export default function ChatFeed() {
+  const activeChat = useChatStore((state) => state.activeChat);
+  const isThinking = useChatStore((state) => state.isThinking);
+  const sendMessage = useChatStore((state) => state.sendMessage);
+
   const [copiedId, setCopiedId] = useState(null);
 
   const handleCopy = (text, id) => {
@@ -12,18 +19,23 @@ export default function ChatFeed({ chat, isThinking, onSendMessage, onRegenerate
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  if (!chat || !chat.messages) return null;
+  if (!activeChat || !activeChat.messages) return null;
 
   return (
     <div className={styles.container}>
       {/* Messages List - ChatGPT / Claude Style */}
       <div className={styles.messagesList}>
-        {chat.messages.map((msg, index) => {
+        {activeChat.messages.map((msg, index) => {
           const isUser = msg.sender === "user";
-          const isLastAi = !isUser && index === chat.messages.length - 1;
 
           return (
-            <div key={msg.id} className={`${styles.messageRow} ${isUser ? styles.userRow : styles.aiRow}`}>
+            <motion.div
+              key={msg.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`${styles.messageRow} ${isUser ? styles.userRow : styles.aiRow}`}
+            >
               {/* Avatar (AI only) */}
               {!isUser && (
                 <div className={styles.avatarWrapper}>
@@ -67,17 +79,12 @@ export default function ChatFeed({ chat, isThinking, onSendMessage, onRegenerate
                         >
                           {copiedId === `code-${msg.id}` ? (
                             <>
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" strokeWidth="2.5" strokeLinecap="round">
-                                <polyline points="20 6 9 17 4 12" />
-                              </svg>
-                              <span style={{ color: "#2ecc71" }}>Copied!</span>
+                              <Check className="w-3.5 h-3.5 text-emerald-400" />
+                              <span className="text-emerald-400 font-medium">Copied!</span>
                             </>
                           ) : (
                             <>
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                              </svg>
+                              <Copy className="w-3.5 h-3.5 opacity-80" />
                               <span>Copy code</span>
                             </>
                           )}
@@ -114,13 +121,16 @@ export default function ChatFeed({ chat, isThinking, onSendMessage, onRegenerate
                   {msg.suggestions && (
                     <div className={styles.suggestionPills}>
                       {msg.suggestions.map((sug, i) => (
-                        <button
+                        <motion.button
                           key={i}
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
                           className={styles.sugPill}
-                          onClick={() => onSendMessage && onSendMessage(sug)}
+                          onClick={() => sendMessage(sug)}
                         >
-                          ✦ {sug}
-                        </button>
+                          <Sparkles className="w-3 h-3 text-sky-400 inline mr-1" />
+                          {sug}
+                        </motion.button>
                       ))}
                     </div>
                   )}
@@ -136,14 +146,9 @@ export default function ChatFeed({ chat, isThinking, onSendMessage, onRegenerate
                       title="Copy response"
                     >
                       {copiedId === msg.id ? (
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" strokeWidth="2.5" strokeLinecap="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
                       ) : (
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                        </svg>
+                        <Copy className="w-3.5 h-3.5 opacity-80" />
                       )}
                     </button>
 
@@ -151,36 +156,29 @@ export default function ChatFeed({ chat, isThinking, onSendMessage, onRegenerate
                     <button
                       className={styles.iconActionBtn}
                       onClick={() => {
-                        const prevUserMsg = [...chat.messages].reverse().find((m) => m.sender === "user");
-                        if (prevUserMsg && onSendMessage) {
-                          onSendMessage(prevUserMsg.text);
+                        const prevUserMsg = [...activeChat.messages].reverse().find((m) => m.sender === "user");
+                        if (prevUserMsg) {
+                          sendMessage(prevUserMsg.text);
                         }
                       }}
                       title="Regenerate / Restart response"
                     >
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="23 4 23 10 17 10" />
-                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-                      </svg>
+                      <RotateCcw className="w-3.5 h-3.5 opacity-80" />
                     </button>
 
                     {/* Thumbs Up Icon */}
                     <button className={styles.iconActionBtn} title="Good response">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
-                      </svg>
+                      <ThumbsUp className="w-3.5 h-3.5 opacity-70" />
                     </button>
 
                     {/* Thumbs Down Icon */}
                     <button className={styles.iconActionBtn} title="Bad response">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3" />
-                      </svg>
+                      <ThumbsDown className="w-3.5 h-3.5 opacity-70" />
                     </button>
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           );
         })}
 

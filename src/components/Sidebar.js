@@ -1,60 +1,15 @@
 "use client";
 
+import { useChatStore } from "@/store/useChatStore";
+import { Image, Video, Code, LayoutGrid, FolderKanban, Search, Plus, Crown, PanelLeftClose } from "lucide-react";
+import { motion } from "motion/react";
 import styles from "./Sidebar.module.css";
 
 const FEATURES = [
-  {
-    key: "images",
-    label: "Images",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <circle cx="8.5" cy="8.5" r="1.5" />
-        <polyline points="21 15 16 10 5 21" />
-      </svg>
-    ),
-  },
-  {
-    key: "videos",
-    label: "Videos",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="23 7 16 12 23 17 23 7" />
-        <rect x="1" y="5" width="15" height="14" rx="2" />
-      </svg>
-    ),
-  },
-  {
-    key: "codex",
-    label: "Codex",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
-  },
-  {
-    key: "apps",
-    label: "Apps",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1" />
-        <rect x="14" y="3" width="7" height="7" rx="1" />
-        <rect x="3" y="14" width="7" height="7" rx="1" />
-        <rect x="14" y="14" width="7" height="7" rx="1" />
-      </svg>
-    ),
-  },
-  {
-    key: "projects",
-    label: "Projects",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-      </svg>
-    ),
-  },
+  { key: "images", label: "Images", icon: Image },
+  { key: "videos", label: "Videos", icon: Video },
+  { key: "apps", label: "Apps", icon: LayoutGrid },
+  { key: "projects", label: "Projects", icon: FolderKanban },
 ];
 
 const CHATS = [
@@ -65,47 +20,87 @@ const CHATS = [
   "Design Enhancement Guide",
 ];
 
-export default function Sidebar({ activeChatTitle, onSelectChat, onNewChat, onSelectFeature }) {
+export default function Sidebar() {
+  const isSidebarOpen = useChatStore((state) => state.isSidebarOpen);
+  const toggleSidebar = useChatStore((state) => state.toggleSidebar);
+  const activeChat = useChatStore((state) => state.activeChat);
+  const selectChat = useChatStore((state) => state.selectChat);
+  const newChat = useChatStore((state) => state.newChat);
+  const sendMessage = useChatStore((state) => state.sendMessage);
+  const toggleSearchModal = useChatStore((state) => state.toggleSearchModal);
+  const toggleModal = useChatStore((state) => state.toggleModal);
+
+  const activeChatTitle = activeChat ? activeChat.title : null;
+
+  const handleSelectFeature = (key) => {
+    const featurePrompts = {
+      images: "Buatkan gambaran konsep visual desain poster AI modern dengan tema Glassmorphism",
+      videos: "Buatkan skenario video animasi cinematic 3D berdurasi 15 detik",
+      codex: "Buatkan komponen React Next.js untuk sistem data table interaktif",
+      apps: "Bagaimana cara merancang arsitektur microservices untuk aplikasi AI Dashboard?",
+      projects: "Tampilkan ringkasan status proyek Mibp.dev v4.2 terkini",
+    };
+    if (featurePrompts[key]) {
+      sendMessage(featurePrompts[key]);
+    }
+  };
+
+  if (!isSidebarOpen) return null;
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarTop}>
-        {/* Logo */}
+        {/* Logo & Controls Header */}
         <div className={styles.logoRow}>
-          <div className={styles.logo} onClick={onNewChat} style={{ cursor: "pointer" }}>
-            <div className={styles.logoOrb} />
+          <div className={styles.logo} onClick={newChat} style={{ cursor: "pointer" }}>
             <span className={styles.logoText}>Mibp.dev</span>
           </div>
-          <button className={styles.iconBtn} aria-label="Search">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </button>
+
+          <div className="flex items-center gap-1">
+            <button
+              className={styles.iconBtn}
+              aria-label="Search"
+              onClick={() => toggleSearchModal(true)}
+              title="Pencarian (Cmd+K)"
+            >
+              <Search className="w-4.5 h-4.5" />
+            </button>
+            <button
+              className={styles.iconBtn}
+              aria-label="Hide Sidebar"
+              onClick={() => toggleSidebar(false)}
+              title="Sembunyikan Sidebar"
+            >
+              <PanelLeftClose className="w-4.5 h-4.5" />
+            </button>
+          </div>
         </div>
 
-        {/* New Chat */}
-        <button className={styles.newChatBtn} id="new-chat-btn" onClick={onNewChat}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="16" />
-            <line x1="8" y1="12" x2="16" y2="12" />
-          </svg>
+        {/* New Chat Button */}
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className={styles.navItem}
+          id="new-chat-btn"
+          onClick={newChat}
+        >
+          <Plus className="w-4 h-4" />
           <span>New Chat</span>
-        </button>
+        </motion.button>
 
         {/* Features */}
         <nav className={styles.section}>
           <h4 className={styles.sectionLabel}>FEATURES</h4>
           <ul className={styles.navList}>
-            {FEATURES.map((f) => (
+            {FEATURES.map(({ key, label, icon: Icon }) => (
               <li
-                key={f.key}
+                key={key}
                 className={styles.navItem}
-                data-page={f.key}
-                onClick={() => onSelectFeature && onSelectFeature(f.key)}
+                data-page={key}
+                onClick={() => handleSelectFeature(key)}
               >
-                {f.icon}
-                <span>{f.label}</span>
+                <Icon className="w-4 h-4 text-sky-400 opacity-80" />
+                <span>{label}</span>
               </li>
             ))}
           </ul>
@@ -118,10 +113,9 @@ export default function Sidebar({ activeChatTitle, onSelectChat, onNewChat, onSe
             {CHATS.map((c) => (
               <li
                 key={c}
-                className={`${styles.navItem} ${styles.chatItem} ${
-                  activeChatTitle === c ? styles.active : ""
-                }`}
-                onClick={() => onSelectChat && onSelectChat(c)}
+                className={`${styles.navItem} ${styles.chatItem} ${activeChatTitle === c ? styles.active : ""
+                  }`}
+                onClick={() => selectChat(c)}
               >
                 {c}
               </li>
@@ -143,12 +137,16 @@ export default function Sidebar({ activeChatTitle, onSelectChat, onNewChat, onSe
               <span className={styles.price}>$49</span> /month
             </div>
           </div>
-          <button className={styles.upgradeBtn} id="upgrade-btn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={styles.upgradeBtn}
+            id="upgrade-btn"
+            onClick={() => toggleModal("isUpgradeOpen", true)}
+          >
+            <Crown className="w-3.5 h-3.5" />
             Upgrade Now
-          </button>
+          </motion.button>
         </div>
       </div>
     </aside>

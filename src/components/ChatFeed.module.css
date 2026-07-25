@@ -137,7 +137,7 @@
   margin-top: 12px;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid var(--border-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   background: #090d16;
 }
 
@@ -145,37 +145,39 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .codeLang {
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .codeCopyBtn {
   display: flex;
   align-items: center;
   gap: 5px;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.74rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
 }
 
 .codeCopyBtn:hover {
-  background: var(--bg-btn-hover);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: rgba(0, 198, 251, 0.4);
 }
 
 .codeBlock pre {
@@ -184,7 +186,7 @@
   font-family: 'Fira Code', 'Courier New', monospace;
   font-size: 0.84rem;
   line-height: 1.45;
-  color: #00c6fb;
+  color: #38bdf8;
 }
 
 /* Checklist Grid */
@@ -246,11 +248,14 @@
 
 .sugPill {
   font-size: 0.78rem;
-  padding: 5px 12px;
+  padding: 5px 14px;
   border-radius: var(--radius-full);
   background: var(--bg-btn);
   border: 1px solid var(--border-subtle);
   color: var(--text-accent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
   transition: all var(--transition-fast);
   cursor: pointer;
 }
@@ -258,6 +263,7 @@
 .sugPill:hover {
   background: var(--bg-btn-hover);
   border-color: var(--border-glow);
+  box-shadow: 0 0 16px rgba(0, 198, 251, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
 }
 
@@ -265,20 +271,23 @@
 .bottomActionBar {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   margin-top: 10px;
   padding-top: 4px;
 }
 
 .iconActionBtn {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-sm);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  color: var(--text-muted);
-  background: none;
-  border: none;
+  color: var(--text-secondary);
+  background: var(--bg-btn);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -286,6 +295,8 @@
 .iconActionBtn:hover {
   background: var(--bg-btn-hover);
   color: var(--text-primary);
+  border-color: var(--border-glow);
+  box-shadow: 0 0 14px rgba(0, 198, 251, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Thinking State */

@@ -1,5 +1,8 @@
 "use client";
 
+import { useChatStore } from "@/store/useChatStore";
+import { Image, Video, Code, ArrowUpRight } from "lucide-react";
+import { motion } from "motion/react";
 import styles from "./FeatureCards.module.css";
 
 const CARDS = [
@@ -9,13 +12,7 @@ const CARDS = [
     title: "Image Generator",
     desc: "Turn ideas into stunning visuals in seconds.",
     prompt: "Buatkan gambar konsep lanskap futuristik dengan gaya Cyberpunk",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <circle cx="8.5" cy="8.5" r="1.5" />
-        <polyline points="21 15 16 10 5 21" />
-      </svg>
-    ),
+    icon: Image,
   },
   {
     id: "card-video-gen",
@@ -23,12 +20,7 @@ const CARDS = [
     title: "Video Generator",
     desc: "Create cinematic videos from simple prompts.",
     prompt: "Buatkan animasi video 3D gerakan kamera melintasi kota neon",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="23 7 16 12 23 17 23 7" />
-        <rect x="1" y="5" width="15" height="14" rx="2" />
-      </svg>
-    ),
+    icon: Video,
   },
   {
     id: "card-dev-assistant",
@@ -36,39 +28,41 @@ const CARDS = [
     title: "Dev Assistant",
     desc: "Accelerate development with intelligent assistance.",
     prompt: "Buatkan function JavaScript async untuk integrasi API Mibp.dev AI",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
+    icon: Code,
   },
 ];
 
-export default function FeatureCards({ onCardClick }) {
+export default function FeatureCards() {
+  const sendMessage = useChatStore((state) => state.sendMessage);
+
   return (
     <section className={styles.cards}>
-      {CARDS.map((card, idx) => (
-        <div
-          key={card.id}
-          className={styles.card}
-          id={card.id}
-          style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
-          onClick={() => onCardClick && onCardClick(card.prompt)}
-        >
-          <div className={styles.cardHeader}>
-            <div className={styles.cardIcon}>{card.icon}</div>
-            <button className={styles.cardArrow} aria-label={`Open ${card.title}`}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
-            </button>
-          </div>
-          <h3 className={styles.cardTitle}>{card.title}</h3>
-          <p className={styles.cardDesc}>{card.desc}</p>
-        </div>
-      ))}
+      {CARDS.map((card, idx) => {
+        const Icon = card.icon;
+        return (
+          <motion.div
+            key={card.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.15 + idx * 0.1 }}
+            whileHover={{ y: -4 }}
+            className={styles.card}
+            id={card.id}
+            onClick={() => sendMessage(card.prompt)}
+          >
+            <div className={styles.cardHeader}>
+              <div className={styles.cardIcon}>
+                <Icon className="w-5 h-5" />
+              </div>
+              <button className={styles.cardArrow} aria-label={`Open ${card.title}`}>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+            </div>
+            <h3 className={styles.cardTitle}>{card.title}</h3>
+            <p className={styles.cardDesc}>{card.desc}</p>
+          </motion.div>
+        );
+      })}
     </section>
   );
 }

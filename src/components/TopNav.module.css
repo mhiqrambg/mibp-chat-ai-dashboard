@@ -15,20 +15,53 @@
   gap: 8px;
 }
 
+/* Glassmorphism Sidebar Toggle Button */
+.sidebarToggleBtn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: var(--glass-border);
+  color: var(--text-secondary);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--glass-shadow);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sidebarToggleBtn:hover {
+  background: var(--glass-bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-glow);
+  box-shadow: var(--glass-glow);
+}
+
+/* Glassmorphism Mobile Menu Capsule Button */
 .mobileMenuBtn {
   display: none;
   align-items: center;
   gap: 8px;
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  background: var(--bg-new-chat);
-  border: 1px solid var(--border-glow);
+  padding: 7px 16px;
+  border-radius: 9999px;
+  background: var(--glass-bg);
+  border: var(--glass-border);
   color: var(--text-accent);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--glass-shadow);
   transition: all var(--transition-fast);
-  max-width: 200px;
+  max-width: 190px;
+}
+
+.mobileMenuBtn:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: var(--glass-glow);
 }
 
 .mobileMenuText {
@@ -37,31 +70,60 @@
   text-overflow: ellipsis;
 }
 
+/* Glassmorphism Version Badge Capsule Button */
 .versionBadge {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  background: var(--bg-btn);
-  border: 1px solid var(--border-subtle);
+  padding: 7px 16px;
+  border-radius: 9999px;
+  background: var(--glass-bg);
+  border: var(--glass-border);
   color: var(--text-secondary);
   font-size: 0.82rem;
   font-weight: 500;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--glass-shadow);
   transition: all var(--transition-fast);
-  backdrop-filter: blur(8px);
   cursor: pointer;
 }
 
 .versionBadge:hover {
-  background: var(--bg-btn-hover);
+  background: var(--glass-bg-hover);
   color: var(--text-primary);
+  border-color: var(--border-glow);
+  box-shadow: var(--glass-glow);
 }
 
 .topNavRight {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
+}
+
+/* Glassmorphism Mobile Search Icon Button */
+.mobileSearchBtn {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: var(--glass-border);
+  color: var(--text-secondary);
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--glass-shadow);
+  transition: all var(--transition-fast);
+}
+
+.mobileSearchBtn:hover {
+  background: var(--glass-bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-glow);
+  box-shadow: var(--glass-glow);
 }
 
 .navLink {
@@ -100,10 +162,11 @@
   border: 2px solid var(--border-glow);
   cursor: pointer;
   transition: box-shadow var(--transition-fast);
+  box-shadow: 0 0 8px rgba(0, 198, 251, 0.15);
 }
 
 .avatar:hover {
-  box-shadow: 0 0 16px rgba(0, 198, 251, 0.25);
+  box-shadow: 0 0 20px rgba(0, 198, 251, 0.35);
 }
 
 .avatar img {
@@ -117,12 +180,16 @@
     display: flex;
   }
 
+  .mobileSearchBtn {
+    display: grid;
+  }
+
   .versionBadge {
     display: none;
   }
 
   .topNavRight {
-    gap: 10px;
+    gap: 8px;
   }
 
   .navLink {

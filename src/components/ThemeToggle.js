@@ -1,13 +1,21 @@
 "use client";
 
-import { useTheme } from "@/context/ThemeContext";
+import { useChatStore } from "@/store/useChatStore";
 import { useState, useRef, useEffect } from "react";
+import { Sun, Moon, Monitor, ChevronDown, Check } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import styles from "./ThemeToggle.module.css";
 
 export default function ThemeToggle() {
-  const { theme, changeTheme } = useTheme();
+  const theme = useChatStore((state) => state.theme);
+  const setTheme = useChatStore((state) => state.setTheme);
+  const initTheme = useChatStore((state) => state.initTheme);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    initTheme();
+  }, [initTheme]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -20,35 +28,9 @@ export default function ThemeToggle() {
   }, []);
 
   const getIcon = (t) => {
-    if (t === "light") {
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="5" />
-          <line x1="12" y1="1" x2="12" y2="3" />
-          <line x1="12" y1="21" x2="12" y2="23" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-          <line x1="1" y1="12" x2="3" y2="12" />
-          <line x1="21" y1="12" x2="23" y2="12" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </svg>
-      );
-    }
-    if (t === "dark") {
-      return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-      );
-    }
-    return (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-        <line x1="8" y1="21" x2="16" y2="21" />
-        <line x1="12" y1="17" x2="12" y2="21" />
-      </svg>
-    );
+    if (t === "light") return <Sun className="w-4 h-4 text-amber-400" />;
+    if (t === "dark") return <Moon className="w-4 h-4 text-sky-400" />;
+    return <Monitor className="w-4 h-4 text-slate-400" />;
   };
 
   const getLabel = (t) => {
@@ -67,47 +49,39 @@ export default function ThemeToggle() {
       >
         {getIcon(theme)}
         <span className={styles.btnLabel}>{getLabel(theme)}</span>
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
+        <ChevronDown className="w-3.5 h-3.5 opacity-70 transition-transform duration-200" style={{ transform: isOpen ? 'rotate(180deg)' : 'none' }} />
       </button>
 
-      {isOpen && (
-        <div className={styles.dropdown}>
-          <button
-            className={`${styles.optionBtn} ${theme === "system" ? styles.activeOption : ""}`}
-            onClick={() => {
-              changeTheme("system");
-              setIsOpen(false);
-            }}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.96 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className={styles.dropdown}
           >
-            {getIcon("system")}
-            <span>System</span>
-          </button>
-
-          <button
-            className={`${styles.optionBtn} ${theme === "light" ? styles.activeOption : ""}`}
-            onClick={() => {
-              changeTheme("light");
-              setIsOpen(false);
-            }}
-          >
-            {getIcon("light")}
-            <span>Light</span>
-          </button>
-
-          <button
-            className={`${styles.optionBtn} ${theme === "dark" ? styles.activeOption : ""}`}
-            onClick={() => {
-              changeTheme("dark");
-              setIsOpen(false);
-            }}
-          >
-            {getIcon("dark")}
-            <span>Dark</span>
-          </button>
-        </div>
-      )}
+            {[
+              { key: "system", label: "System", icon: Monitor },
+              { key: "light", label: "Light", icon: Sun },
+              { key: "dark", label: "Dark", icon: Moon },
+            ].map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                className={`${styles.optionBtn} ${theme === key ? styles.activeOption : ""}`}
+                onClick={() => {
+                  setTheme(key);
+                  setIsOpen(false);
+                }}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{label}</span>
+                {theme === key && <Check className="w-3.5 h-3.5 ml-auto text-sky-400" />}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
